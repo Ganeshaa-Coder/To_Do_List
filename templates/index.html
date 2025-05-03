@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Todo App</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <h1>Todo App</h1>
+
+    <h2>Tasks</h2>
+    <ul>
+        {% for index, task in tasks %}
+        <li {% if task.done %}class="done"{% endif %}>
+            {{ index }}. {{ task.text }}
+            {% if not task.done %}
+                <a href="{{ url_for('done_task', task_index=index) }}">Mark as Done</a>
+            {% endif %}
+        </li>
+        {% else %}
+        <li>No tasks yet!</li>
+        {% endfor %}
+    </ul>
+
+    <h2>Add New Task</h2>
+    <form method="POST" action="{{ url_for('add_task') }}">
+        <input type="text" name="task" required placeholder="Enter new task">
+        <button type="submit">Add Task</button>
+    </form>
+
+</body>
+</html>
